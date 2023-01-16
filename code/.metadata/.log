@@ -1,0 +1,24 @@
+!SESSION 2022-06-08 15:15:50.232 -----------------------------------------------
+eclipse.buildId=Version 1.9.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-06-08 15:16:30.606
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-06-08 15:16:30.698
+!MESSAGE Log4j initialized with config file C:\Users\benny\Documents\acoustic_release\stm32\deep-sound\code\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-06-08 15:16:35.121
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-06-08 15:17:41.099
+!MESSAGE Indexed 'acoustic_release' (34 sources, 119 headers) in 7.4 sec: 12,794 declarations; 67,080 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.21%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-06-08 15:26:03.256
+!MESSAGE Indexed 'Deck_Box' (23 sources, 104 headers) in 4.57 sec: 10,569 declarations; 61,212 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.24%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-06-08 15:27:41.381
+!MESSAGE Indexed 'servo' (23 sources, 104 headers) in 3.12 sec: 10,580 declarations; 61,700 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.24%)

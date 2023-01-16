@@ -1,0 +1,54 @@
+Circuit: * C:\Users\benny\Downloads\DesignFiles (4)\LTspice\ACAnalysis.asc
+
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-005
+Gmin = 1.6455e-006
+Gmin = 1.76685e-007
+vernier = 0.5
+Gmin = 5.02003e-008
+vernier = 0.25
+vernier = 0.333333
+vernier = 0.166667
+Gmin = 3.69593e-008
+vernier = 0.222222
+Gmin = 2.26946e-008
+vernier = 0.296296
+vernier = 0.395061
+Gmin = 1.01414e-008
+vernier = 0.526748
+vernier = 0.702331
+Gmin = 2.89349e-009
+vernier = 0.936441
+Gmin = 4.28831e-010
+vernier = 1
+Gmin = 4.60453e-011
+Gmin = 4.94408e-012
+Gmin = 5.30866e-013
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+
+Date: Sun Jun 05 16:27:00 2022
+Total elapsed time: 0.356 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 952
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 61
+fillins = 103
+solver = Normal
+Matrix Compiler1:     520 opcodes
+Matrix Compiler2: 9.11 KB object code size  2.3/3.8/[2.0]
+

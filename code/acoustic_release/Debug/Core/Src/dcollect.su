@@ -1,0 +1,2 @@
+../Core/Src/dcollect.c:11:6:send_samples	24	static
+../Core/Src/dcollect.c:20:6:send_ss_seq	16	static

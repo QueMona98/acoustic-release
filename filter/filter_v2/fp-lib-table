@@ -1,0 +1,7 @@
+(fp_lib_table
+  (lib (name "ad8044")(type "KiCad")(uri "C:/Users/benny/Downloads/ul_AD8044ARZ-14-REEL7/KiCAD/2022-04-18_03-22-00/footprints.pretty")(options "")(descr ""))
+  (lib (name "ad8041")(type "KiCad")(uri "C:/Users/benny/Downloads/ul_AD8041ARZ-REEL7/KiCAD/2022-04-18_03-29-11/footprints.pretty")(options "")(descr ""))
+  (lib (name "ad8031")(type "KiCad")(uri "C:/Users/benny/Downloads/ul_AD8031ARZ-REEL7/KiCAD/2022-04-18_03-27-17/footprints.pretty")(options "")(descr ""))
+  (lib (name "ad8042")(type "KiCad")(uri "C:/Users/benny/Downloads/ul_AD8042ARZ-REEL7/KiCAD/2022-04-22_06-20-26/footprints.pretty")(options "")(descr ""))
+  (lib (name "ad8031_new")(type "KiCad")(uri "C:/Users/benny/Downloads/ul_AD8031ARTZ-REEL7/KiCAD/2022-04-22_06-18-17/footprints.pretty")(options "")(descr ""))
+)

@@ -44,7 +44,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
- ADC_HandleTypeDef hadc1;
+
+ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
 UART_HandleTypeDef hlpuart1;
@@ -80,25 +81,11 @@ void dma_xfer_cplt(DMA_HandleTypeDef *hdma);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -114,31 +101,50 @@ int main(void)
     int i = 0;
     uint8_t foundf1, foundf2, release;
 
+
+
+    // clear GPIO B7 - this is the release LED
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
 
-    POWER_ON(PREAMP);
-    POWER_ON(FILTER);
+    // macros -> set input bits in DEV_GPIO_PORT
+    POWER_ON(PREAMP); // pin 7
+    POWER_ON(FILTER); // pin 6
 
     HAL_Delay(1000);
 
+
+    //enable ADC peripheral on hadc1 with buf as buffer with length FFT_LEN
     HAL_ADC_Start_DMA(&hadc1, (uint32_t*)buf, FFT_LEN);
 
-  /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+
     while (1)
     {
+    	// this flag starts at 0
         if (adcbuf_ready) {
             adcbuf_ready = 0;
             /* Send data over UART if DEBUG mode is active. Can change this in settings.h */
 #ifdef DEBUG
             send_ss_seq();
 #endif
+            // buf = real array
+            // imag = imaginary array
+            // m (10) sets sample frequency, 1 << m (10) counts
+            // 0 = forward transform, 1 = imaginary transform
+
+            // scale FFT array to prevent overflow
             fix_fft(buf, imag, 10, 0);
+
+            // populate mag array with detected magnitudes from FFT
             compute_freq_mag(buf, imag, mag, 0, FFT_LEN);
+
+            // determine if low frequency is found
             foundf1 = sigdet(buf, imag, mag, FREQL);
+
+            // determine if high frequency is found
             foundf2 = sigdet(buf, imag, mag, FREQH);
+
+
             /* LEDs for visualizing what is being detected */
             if (foundf1)
                 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
@@ -148,17 +154,22 @@ int main(void)
                 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
             else
                 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+
+
             /* Update state machine */
-            release = check_state(foundf1, foundf2);
+            release = check_state(foundf1, foundf2); // set if pattern found
             if (release) {
             	/* LED for visualization */
                 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);
                 /* TODO: Activate servo */
             }
+
+            // update UART on detected frequencies
 #ifdef DEBUG
             send_samples(mag);
             send_ss_seq();
 #endif
+            // fill up new ADC sample reading
             HAL_ADC_Start_DMA(&hadc1, (uint32_t*)buf, FFT_LEN);
         }
     }

@@ -39,7 +39,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
- TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
@@ -57,6 +57,14 @@ volatile static uint32_t gu32_ticks = 0;
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+
+
+
+/*
+ 	 This delay function is not used at the moment
+*/
+
 void delay_ms(uint16_t au16_ms)
 {
     while(au16_ms > 0)
@@ -67,9 +75,14 @@ void delay_ms(uint16_t au16_ms)
     }
 }
 
-/* TIM 2 square wave function
- * output at PA0 GPIO
- */
+
+
+
+/*
+	TIM 2 square wave function
+  	output at PA0 GPIO
+*/
+
 void square_wave(int duty_cycle, int freq)
 {
 	// setting frequency
@@ -80,95 +93,88 @@ void square_wave(int duty_cycle, int freq)
 	TIM2->CCR1 = duty_cycle * freq_arr / 100;
 
 }
-/* USER CODE END 0 */
 
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
+
+
+
+
+
+
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_TIM4_Init();
-  /* USER CODE BEGIN 2 */
+
+  // Starts PWM Signal Generation
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1); //190,
   //HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 
-  /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+
+
+  uint16_t f1 = 411 * 5; // 411
+  uint16_t f2 = 380 * 5; // 380
+
+
+
   while (1)
   {
 	  /* Signal out at pin PA0
 	   * transmit switch read PA3
 	   * Transmit LED out PC0 xx
 	   */
+
+
 	  //square_wave( 50, 50); //duty cycle, freq
 
-	  //HAL_GPIO_WritePin(TransmitLed_GPIO_Port, TransmitLed_Pin, 1);
+
+
+	  // if transmit switch is turned on
 	  if(HAL_GPIO_ReadPin(TransmitSwitch_GPIO_Port,TransmitSwitch_Pin)==1){
-		  //HAL_GPIO_WritePin(TransmitLed_GPIO_Port, TransmitLed_Pin, 1);
-		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, 0); //red led
+
 
 		  //int frq1 = 190; //in kHz
-		  int ARR1 = 411;//422;//400;//76000000/(frq1*1000); for freq 190k
+		  int ARR1 = f1;//411;//422;//400;//76000000/(frq1*1000); for freq 190k
 		  //int frq2 = 210; //in Khz
-		  int ARR2 = 380;//362; //76000000/(frq2*1000); for freq 210k
+		  int ARR2 = f2;//380;//362; //76000000/(frq2*1000); for freq 210k
+
+
 		  /* CRRx = Duty Cycle * ARRx /100
 		   * 200 = 50 * 400 / 100
 		   * 181 = 50 * 362 / 100
 		   * */
 
+
 		  TIM2->CCR1 = 205;//200;
 		  TIM2->ARR = ARR1; //freq1
 		  HAL_Delay(1000);
-		  //delay_ms(20000);
 
-		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 0);
-		  //TIM2->CCR1 = 0;
+
 		  TIM2->CCR1 = 190;//181;
 		  TIM2->ARR = ARR2; //setting freq2
 		  HAL_Delay(1000);
-		  //delay_ms(20000);
+
 	  }
 	  else{
-		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 0);
-		  //HAL_GPIO_WritePin(TransmitLed_GPIO_Port, TransmitLed_Pin, 0);
 		  TIM2->CCR1 = 0;
-		  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, 1);
-
 	  }
 
 
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+
+
   }
-  /* USER CODE END 3 */
 }
+
 
 /**
   * @brief System Clock Configuration

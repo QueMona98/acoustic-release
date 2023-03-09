@@ -1,6 +1,10 @@
 #include "main.h"
 #include "uart.h"
 
+/*
+	write to UART by char
+ */
+
 void write_char(uint8_t ch) {
 	while (!(LPUART1->ISR & (1 << 7)));
 	LPUART1->TDR = ch;
